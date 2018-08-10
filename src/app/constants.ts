@@ -80,6 +80,9 @@ export class Constants{
   public GET_ALL_REPORT = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH + "/qa/get-all-report";
   public CHANGE_REPORT_STATUS = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH + "/qa/change-report-status";
   public NUMBER_REPORT = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH + "/qa/number-report";
+
+  // ADD MORE
+  public GET_TOP5_MAJOR = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH +"/university/get-popular-major";
   //ERROR
   public UNAUTHORIZED = 401;
   public CONFLICT = 409;

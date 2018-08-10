@@ -88,7 +88,9 @@ export class SearchService {
   getTopThreeMajor(data): Observable<any[]>{
     return this._http.get(this.constant.GET_TOP_THREE+"?majorId="+ data).map((res:Response)=> res.json());
   }
-
+  getTopFiveMajor():Observable<any[]>{
+    return this._http.get(this.constant.GET_TOP5_MAJOR).map((response: Response) => response.json());
+  }
   getMajorByID(data): Observable<any[]>{
     return this._http.get(this.constant.FIND_BY_MAJOR_ID+"?majorId="+ data)
       .map((res: Response) => res.json());

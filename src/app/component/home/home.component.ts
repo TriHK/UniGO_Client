@@ -14,14 +14,15 @@ export class HomeComponent implements OnInit,OnDestroy {
   public valueCurrent: any;
 
   public searchMajor: any[];
+  public topFiveMajor:any[];
   isActive: boolean = false;
 
   constructor(private router: Router, private searchService: SearchService) { }
 
   ngOnInit() {
 
-    this.getTopThreeMajor(4314);
-
+    this.getTopThreeMajor(1);
+    this.getTopFiveMajor();
     $('#news-uni li').click(function(){
       $('#news-uni li').removeClass("active");
       $(this).addClass("active");
@@ -36,6 +37,12 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.searchService.getTopThreeMajor(value).subscribe((response: any)=>{
       this.searchMajor = response;
     });
+  }
+
+  getTopFiveMajor(){
+    this.searchService.getTopFiveMajor().subscribe((response:any)=>{
+      this.topFiveMajor = response;
+    })
   }
 
   ngOnDestroy() {
