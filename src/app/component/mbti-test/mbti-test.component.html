@@ -48,9 +48,10 @@
                 <span style="font-size: 20px"
                       [matTooltip]="majorGroup.resources[0].major.groupMajor.name">Khối Ngành  {{majorGroup.name}}</span>
             <br>
-            <ul>
+            <ul class="major-list-choice">
               <li *ngFor="let resource of majorGroup.resources" class="box-title bold list-major text-highlight">
-                {{resource.major.majorName}}
+                <a [routerLink]="['/app-view-major-university',resource.major.id]" class="major">
+                  {{resource.major.majorName}}</a>
               </li>
             </ul>
           </div>

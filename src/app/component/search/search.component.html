@@ -1,37 +1,68 @@
 <section id="hero">
   <div class="container" style="top:145px">
     <div class="box-search-job box">
-      <form method="get" id="frm-search-job" #fSearch="ngForm" ngForm="SearchForm()">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1 class="text-center"><b>Tìm kiếm  ngôi trường mơ ước của bạn cùng UniStart</b></h1>
-          </div>
-          <div class="search-page" style="padding-bottom: 30px">
-              <select2 class="form-group major" [data]="listMajor| async" [value]="valueMajor" (valueChanged)="changedMajor($event)"
-                       [options]="optionMajor" style="padding: 15px"></select2>
-              <select2 class="form-group location" [data]="listLocation| async" [value]="valueLocation" (valueChanged)="changedLocation($event)"
-                       [options]="optionLocation" style="padding: 15px"></select2>
-              <select2 class="form-group university" [data]="listUniName | async" [value]="valueUniversity" (valueChanged)="changedUniversity($event)"
-                       [options]="optionUni" style="padding: 15px"></select2>
-          </div>
-        </div>
-        <div class="text-center">
-          <div class="row">
-            <div class="col-xs-12">
-              <button class="btn" type="submit" (click)="searchUniversity()"><i class="fa fa-search" aria-hidden="true"></i>Tìm Ngay</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+
+      <table class = "table-filter-school">
+        <form [formGroup]="userForm" novalidate>
+          <tr>
+            <td colspan="2">
+              <h1 class="text-center">
+                <b>Tìm kiếm ngôi trường mơ ước của bạn cùng UniStart</b>
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="name">Tên Trường : </label>
+            </td>
+            <td>
+              <input class="form-control" formControlName="schoolName">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Ngành : </label>
+            </td>
+            <td>
+                <angular2-multiselect [data]="dropDownList.listMajor" [(ngModel)]="selectedItems.selectedMajor" [settings]="dropdownSettings"
+                formControlName="major">
+                <c-item>
+                  <ng-template let-item="item">
+                    <label style="color: #333;min-width: 150px;">{{item.itemName}}</label>
+
+                  </ng-template>
+                </c-item>
+              </angular2-multiselect>
+            </td>
+          </tr>
+          <tr>
+            <td> <label>Khu vực :</label></td>
+            <td> <angular2-multiselect [data]="dropDownList.listLocation" [(ngModel)]="selectedItems.selectedLocation" [settings]="dropdownSettings"
+              formControlName="location">
+              <c-item>
+                <ng-template let-item="item">
+                  <label style="color: #333;min-width: 150px;">{{item.itemName}}</label>
+
+                </ng-template>
+              </c-item>
+            </angular2-multiselect></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                <button class="btn" type="submit" (click)="submitForm(pageLoad)" [disabled]="!userForm.valid">
+                    <i class="fa fa-search" aria-hidden="true"></i>Tìm Ngay</button>
+            </td>
+          </tr>
+        </form>
+      </table>
+  </div>
   </div>
 </section>
 <!--Show search-->
 <div *ngIf="show" id="main" style="background-color: white">
   <div class="container" style="margin-top: -65px;">
     <div class="row text-center" id="showsearch">
-      <div class="col-lg-4 col-sm-6 portfolio-item hero-feature"
-           *ngFor="let university of listSearch">
+      <div class="col-lg-4 col-sm-6 portfolio-item hero-feature" *ngFor="let university of listSearch">
         <div class="thumbnail">
           <div style="padding: 20px" *ngIf="university && university.logo">
             <a [routerLink]="['/university',university.id]">
@@ -44,20 +75,31 @@
             </a>
           </div>
           <div class="caption">
-            <div style="min-height: 55px; border: 1px solid white"><p class=""><b>{{university.name}}</b></p></div>
-            <div style="min-height: 35px; border: 1px solid white"><p>{{university.phone}}</p></div>
+            <div style="min-height: 55px; border: 1px solid white">
+              <p class="">
+                <b>{{university.name}}</b>
+              </p>
+            </div>
+            <div style="min-height: 35px; border: 1px solid white">
+              <p>{{university.phone}}</p>
+            </div>
             <div>
               <p>
-                <button [routerLink]="['/university',university.id]" class="btn btn-success"><i
-                  class="fa fa-hand-o-right"></i> Thông Tin
+                <button [routerLink]="['/university',university.id]" class="btn btn-success">
+                  <i class="fa fa-hand-o-right"></i> Thông Tin
                 </button>
               </p>
             </div>
           </div>
         </div>
       </div>
+      <button class="btn btn-success" (click)="loadMoreSchool()">
+        <i class="fa fa-hand-o-right"></i> Tải Thêm
+      </button>
     </div>
-    <div class="text-center"><pagination-controls (pageChange)="p =$event" previousLabel="" nextLabel=""></pagination-controls></div>
+    <div class="text-center">
+      <pagination-controls (pageChange)="p =$event" previousLabel="" nextLabel=""></pagination-controls>
+    </div>
   </div>
 </div>
 
@@ -72,8 +114,7 @@
 <!--News university-->
 <div class="row" id="news-uni">
   <div class="row text-center" style="height: 370px">
-    <div class="col-lg-4 col-sm-6 portfolio-item hero-feature"
-         *ngFor="let university of searchMajor">
+    <div class="col-lg-4 col-sm-6 portfolio-item hero-feature" *ngFor="let university of searchMajor">
       <div class="thumbnail">
         <div style="padding: 20px" *ngIf="university && university.logo">
           <a [routerLink]="['/university',university.id]">
@@ -86,11 +127,15 @@
           </a>
         </div>
         <div class="caption">
-          <div style="min-height: 55px; border: 1px solid white"><p class=""><b>{{university.name}}</b></p></div>
+          <div style="min-height: 55px; border: 1px solid white">
+            <p class="">
+              <b>{{university.name}}</b>
+            </p>
+          </div>
           <div>
             <p>
-              <button [routerLink]="['/university',university.id]" class="btn btn-success"><i
-                class="fa fa-hand-o-right"></i> Thông Tin
+              <button [routerLink]="['/university',university.id]" class="btn btn-success">
+                <i class="fa fa-hand-o-right"></i> Thông Tin
               </button>
             </p>
           </div>
@@ -102,7 +147,3 @@
 <!--End news university-->
 
 <!--Modal-->
-
-
-
-

@@ -110,4 +110,7 @@ export class UniversityService {
   getSchool():Observable<any>{
     return this._http.get(this.contant.GET_SCHOOL).map((res: Response)=> res.json());
   }
+  getMajor():Observable<any>{
+    return this._http.get(this.contant.MAJOR).map((res: Response)=> res.json());
+  }
 }

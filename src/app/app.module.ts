@@ -31,7 +31,7 @@ import { ListuniversityComponent } from './component/admin/listuniversity/listun
 import { AdduniversityComponent } from './component/admin/adduniversity/adduniversity.component';
 import { ApproveReivewComponent } from './component/admin/approve-reivew/approve-reivew.component';
 import { ViewMajorUnversityComponent } from './component/search/view-major-unversity/view-major-university.component';
-
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 // Service
 import { LoginService } from './service/login/login.service';
 import { BaseService } from './service/base-service/base.service';
@@ -111,7 +111,8 @@ const providers = {
         EditQuestionComponent,
         UserFavoriteComponent,
         ApproveQuestionComponent,
-        ListReportComponent
+        ListReportComponent,
+
     ],
     imports: [
         Select2Module,
@@ -129,6 +130,7 @@ const providers = {
         ToastModule.forRoot(),
         NgbModule,
         TagInputModule,
+        AngularMultiSelectModule,
     ],
     providers: [LoginService, BaseService, CheckLoginGuard,
         CheckRoleGuard, SearchService, Constants,

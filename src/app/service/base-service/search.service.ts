@@ -10,7 +10,7 @@ export class SearchService {
 
   }
 
-  getMajor(url): Observable<Select2OptionData[]> {
+  getMajor(url): Observable<any[]> {
     return this._http.get(url)
       .map((response: Response) => response.json())
       .map((majors) => {
@@ -18,7 +18,7 @@ export class SearchService {
           majors.unshift({id: '0', name: ''});
         }
         return majors.map((major) => {
-          return {id: major.id, text: major.majorName};
+          return {id: major.id, itemName: major.majorName};
         });
       })
   }
@@ -36,6 +36,9 @@ export class SearchService {
       })
   }
 
+  getLocation1(): Observable<any[]> {
+    return this._http.get(this.constant.LOCATION).map((res: Response)=> res.json());
+  }
   getLocation(url): Observable<Select2OptionData[]> {
     return this._http.get(url)
       .map((response: Response) => response.json())
@@ -95,6 +98,10 @@ export class SearchService {
   getMajorByID(data): Observable<any[]>{
     return this._http.get(this.constant.FIND_BY_MAJOR_ID+"?majorId="+ data)
       .map((res: Response) => res.json());
+  }
+  doFilterSchool(schoolFilter):Observable<any[]>{
+    return this._http.post(this.constant.FILTER_SCHOOL,schoolFilter)
+      .map((response: Response) => response.json())
   }
 }
 
