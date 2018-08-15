@@ -106,4 +106,8 @@ export class UniversityService {
   deleteReport(data): Observable<any>{
     return this._http.post(this.contant.CHANGE_REPORT_STATUS,data).map((res: Response)=>res.json());
   }
+  //add more
+  getSchool():Observable<any>{
+    return this._http.get(this.contant.GET_SCHOOL).map((res: Response)=> res.json());
+  }
 }

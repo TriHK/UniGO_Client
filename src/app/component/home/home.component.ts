@@ -12,7 +12,7 @@ import {Select2OptionData} from "ng2-select2";
 })
 export class HomeComponent implements OnInit,OnDestroy {
   public valueCurrent: any;
-
+  selectedRow : number;
   public searchMajor: any[];
   public topFiveMajor:any[];
   isActive: boolean = false;
@@ -21,22 +21,21 @@ export class HomeComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
 
-    this.getTopThreeMajor(1);
+    this.getTopThreeMajor(0,1);
     this.getTopFiveMajor();
-    $('#news-uni li').click(function(){
-      $('#news-uni li').removeClass("active");
-      $(this).addClass("active");
-    });
 
   }
 
-  getTopThreeMajor(value){
+  getTopThreeMajor(index,value){
+    this.selectedRow = index;
     this.isActive = true;
     this.valueCurrent = value;
     this.searchMajor = [];
     this.searchService.getTopThreeMajor(value).subscribe((response: any)=>{
       this.searchMajor = response;
     });
+    console.log(value);
+
   }
 
   getTopFiveMajor(){

@@ -23,20 +23,22 @@ export class ViewMajorUnversityComponent implements OnInit {
       this.id = params['id'];
     });
 
-    if(this.id==4314){
-      this.majorName = "Công nghệ thông tin";
-      this.majorImg = "../assets/image/TopMajor/CNTT.jpg";
-    }else if(this.id==4308){
-      this.majorName = "Quản trị kinh doanh";
+    if(this.id==1){
+
+      this.majorName = "Kinh Doang & Quản Lý";
       this.majorImg = "../assets/image/TopMajor/QTKD.jpeg";
-    }else if(this.id==4309){
-      this.majorName = "Tài chính – Ngân hàng";
-      this.majorImg = "../assets/image/TopMajor/TCNH.jpg";
-    }else if(this.id==4327){
-      this.majorName = "Y Dược";
+    }else if(this.id==2){
+      this.majorName = "Công Nghệ Thông Tin";
+      this.majorImg = "../assets/image/TopMajor/CNTT.jpg";
+    }else if(this.id==3){
+      this.majorName = "Y Tế Và Sức Khỏe";
       this.majorImg = "../assets/image/TopMajor/YD.jpg";
+    }else if(this.id==4){
+      this.majorName = "Giáo Dục & Đào Tạo";
+      this.majorImg = "../assets/image/TopMajor/TCNH.jpg";
     }else {
-      this.majorName = "Quốc phòng - An ninh";
+      console.log(this.id);
+      this.majorName = "Kiến Trúc Xây Dựng";
       this.majorImg = "../assets/image/TopMajor/ANQP.jpg";
     }
 

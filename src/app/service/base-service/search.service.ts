@@ -84,6 +84,7 @@ export class SearchService {
     return this._http.post(this.constant.SEARCH,data)
       .map((response: Response) => response.json())
   }
+  //addd
 
   getTopThreeMajor(data): Observable<any[]>{
     return this._http.get(this.constant.GET_TOP_THREE+"?majorId="+ data).map((res:Response)=> res.json());

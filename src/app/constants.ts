@@ -83,6 +83,7 @@ export class Constants{
 
   // ADD MORE
   public GET_TOP5_MAJOR = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH +"/university/get-popular-major";
+  public GET_SCHOOL = this.HTTP + this.SERVER_IP + this.SERVER_PORT + this.SERVER_PATH +"/university/top10";
   //ERROR
   public UNAUTHORIZED = 401;
   public CONFLICT = 409;

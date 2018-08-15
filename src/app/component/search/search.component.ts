@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {SearchService} from "../../service/base-service/search.service";
+import {UniversityService} from "../../service/university/university.service";
 import * as $ from 'jquery';
 import {Observable} from "rxjs/Observable";
 import {Select2OptionData} from "ng2-select2";
@@ -23,7 +24,9 @@ export class SearchComponent implements OnInit {
   public isFirst: boolean = true;
   public isInto: boolean = true;
   constructor(private searchService: SearchService, private contant: Constants,
-              private cef : ChangeDetectorRef) {
+              private cef : ChangeDetectorRef,
+              private UniversityService: UniversityService
+            ) {
   }
 
   public listMajor: Observable<Select2OptionData[]>;
@@ -69,6 +72,9 @@ export class SearchComponent implements OnInit {
       $('#news-uni li').removeClass("active");
       $(this).addClass("active");
     });
+    this.UniversityService.getSchool().subscribe((response: any) =>{
+      this.listSearch = response;
+    this.show=true});
   }
 
   getTopThreeMajor(value){

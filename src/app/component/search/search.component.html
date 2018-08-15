@@ -31,7 +31,7 @@
   <div class="container" style="margin-top: -65px;">
     <div class="row text-center" id="showsearch">
       <div class="col-lg-4 col-sm-6 portfolio-item hero-feature"
-           *ngFor="let university of listSearch | paginate: { itemsPerPage:6, currentPage: p }">
+           *ngFor="let university of listSearch">
         <div class="thumbnail">
           <div style="padding: 20px" *ngIf="university && university.logo">
             <a [routerLink]="['/university',university.id]">
@@ -71,22 +71,6 @@
 
 <!--News university-->
 <div class="row" id="news-uni">
-  <div class="col-lg-12 text-dark-gray text-center">
-    <h2 style="color: black">MỘT SỐ NGÀNH NỔI BẬT HIỆN NAY</h2>
-    <ul>
-      <!--<li [routerLink]="['app-view-major-university',4314]"> Công nghệ thông tin </li>-->
-      <li class="box-title bold list-major active" (click)="getTopThreeMajor('4314')"> Công nghệ thông tin</li>
-      <li class="box-title bold list-major" (click)="getTopThreeMajor('4308')"> Quản trị kinh doanh</li>
-      <li class="box-title bold list-major" (click)="getTopThreeMajor('4309')"> Tài chính – Ngân hàng</li>
-      <li class="box-title bold list-major" (click)="getTopThreeMajor('4327')"> Y Dược</li>
-      <li class="box-title bold list-major" (click)="getTopThreeMajor('4356')"> Quốc phòng - An ninh</li>
-    </ul>
-    <hr class="featurette-divider">
-  </div>
-  <div class="row">
-    <a [routerLink]="['/app-view-major-university',valueCurrent]" class="see-more">
-      Xem thêm <i class="fa fa-caret-right"></i></a>
-  </div>
   <div class="row text-center" style="height: 370px">
     <div class="col-lg-4 col-sm-6 portfolio-item hero-feature"
          *ngFor="let university of searchMajor">

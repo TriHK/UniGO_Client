@@ -78,6 +78,7 @@ export class MbtiTestComponent implements OnInit {
 
 
   public onChoose(item, option) {
+    console.log(this.scores);
     if ((option == 'a' || option == 'b') && !item.isChecked) {
       item.fullChecked = true;
     }
@@ -93,7 +94,7 @@ export class MbtiTestComponent implements OnInit {
       }
       item.isChecked = true;
     }
-    if (option == 'b' && item.isChecked) {
+    if (option == 'b' && !item.isChecked) {
       if (item.MBTIGroup == 'EI') {
         this.scores.E = this.scores.E - 1;
       } else if (item.MBTIGroup == 'SN') {
