@@ -78,6 +78,7 @@ export class MbtiTestComponent implements OnInit {
 
 
   public onChoose(item, option) {
+    console.log(option);
     if ((option == 'a' || option == 'b') && !item.isChecked) {
       item.fullChecked = true;
     }
