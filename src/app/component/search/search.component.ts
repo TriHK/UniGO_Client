@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms'
-import {SearchService} from "../../service/base-service/search.service";
-import {UniversityService} from "../../service/university/university.service";
+import { SearchService } from "../../service/base-service/search.service";
+import { UniversityService } from "../../service/university/university.service";
 import * as $ from 'jquery';
-import {Observable} from "rxjs/Observable";
-import {Select2OptionData} from "ng2-select2";
-import {Constants} from "../../constants";
-
+import { Observable } from "rxjs/Observable";
+import { Select2OptionData } from "ng2-select2";
+import { Constants } from "../../constants";
+import {WaitingBoxComponent} from "../../waiting-box/waiting-box.component";
 
 @Component({
   selector: 'app-search',
@@ -16,10 +16,11 @@ import {Constants} from "../../constants";
 export class SearchComponent implements OnInit {
   //multiple-search
   dropdownList = [];
-  selectedItems :any={
-    "selectedMajor":[],
-    "selectedLocation":[]
+  selectedItems: any = {
+    "selectedMajor": [],
+    "selectedLocation": []
   };
+  dropdownSettings2 = {};
   dropdownSettings = {};
   userForm: FormGroup;
 
@@ -29,16 +30,18 @@ export class SearchComponent implements OnInit {
   public optionUni: Select2Options;
   public optionLocation: Select2Options;
   public valueCurrent: any;
-  public isCheckForUni : boolean = false;
-  public isCheckForMajor : boolean = false;
-  public isCheckForLocation : boolean = false;
+  public isCheckForUni: boolean = false;
+  public isCheckForMajor: boolean = false;
+  public isCheckForLocation: boolean = false;
   public isFirst: boolean = true;
   public isInto: boolean = true;
+  public isMore: boolean ;
   constructor(private searchService: SearchService, private contant: Constants,
-              private cef : ChangeDetectorRef,
-              private UniversityService: UniversityService,
-              private fb: FormBuilder,
-            ) {this.createForm()
+    private cef: ChangeDetectorRef,
+    private UniversityService: UniversityService,
+    private fb: FormBuilder,
+  ) {
+    this.createForm()
   }
   dropDownList: any = {
     "listMajor": [],
@@ -51,32 +54,39 @@ export class SearchComponent implements OnInit {
   public valueLocation: number = 0;
   public valueUniversity: number = 0;
   public listSearch: any[] = [];
-  public listFilter:any[] = [];
+  public listFilter: any[] = [];
   public searchMajor: any[];
   isActive: boolean = false;
-  public schoolFilter:any=[];
-  public pageLoad:number = 0;
+  public schoolFilter: any = [];
+  public pageLoad: number = 0;
+  schoolName: string;
   ngOnInit() {
-    console.log("AAAA")
-    this.dropdownList = [
-      {"id":1,"itemName":"India"},
-      {"id":2,"itemName":"Singapore"},
-      {"id":3,"itemName":"Australia"},
-      {"id":4,"itemName":"Canada"},
-      {"id":5,"itemName":"South Korea"},
-      {"id":6,"itemName":"Germany"},
-      {"id":7,"itemName":"France"},
-      {"id":8,"itemName":"Russia"},
-      {"id":9,"itemName":"Italy"},
-      {"id":10,"itemName":"Sweden"}
-    ];
-this.selectedItems = [];
-this.dropdownSettings = {
-          singleSelection: true,
-          text:"Chọn ngành",
-          enableSearchFilter: true,
-          classes:"myclass custom-class"
-        };
+    this.isMore=true;
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: "Chọn ngành",
+      selectAllText: 'Tất Cả',
+      unSelectAllText: 'Hủy Tất Cả',
+      enableSearchFilter: true,
+      classes: "myclass custom-class-example",
+      badgeShowLimit: 3,
+    };
+    this.dropdownSettings2 = {
+      singleSelection: false,
+      text: "Chọn Khu Vực",
+      enableSearchFilter: true,
+      selectAllText: 'Tất Cả',
+      unSelectAllText: 'Hủy Tất Cả',
+      classes: "myclass custom-class-example",
+      badgeShowLimit: 3
+    };
+    this.schoolFilter = {
+      "name": "",
+      "majorIds": [],
+      "locationIds": [],
+      "limit": 9,
+      "page": 0,
+    }
     ///========================
     document.documentElement.scrollTop = 0;
     //this.changedUniversity({value:null});
@@ -105,25 +115,32 @@ this.dropdownSettings = {
       }
     };
 
-    $('#news-uni li').click(function(){
+    $('#news-uni li').click(function () {
       $('#news-uni li').removeClass("active");
       $(this).addClass("active");
     });
-    this.UniversityService.getMajor().subscribe((response:any)=>{
-      this.dropDownList.listMajor = response.map(e=>({
-        id:e.id,
-        itemName:e.majorName,
+    this.UniversityService.getMajor().subscribe((response: any) => {
+      this.dropDownList.listMajor = response.map(e => ({
+        id: e.id,
+        itemName: e.majorName,
       }));
     });
-    this.searchService.getLocation1().subscribe((response:any)=>{
-      this.dropDownList.listLocation = response.map(e=>({
-        id:e.id,
-        itemName:e.locationName,
+    this.searchService.getLocation1().subscribe((response: any) => {
+      this.dropDownList.listLocation = response.map(e => ({
+        id: e.id,
+        itemName: e.locationName,
       }));
     });
-    this.UniversityService.getSchool().subscribe((response: any) =>{
+    this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
       this.listSearch = response;
-    this.show=true});
+      this.show = true;
+      if(this.schoolFilter.limit > response.length){
+        this.isMore = false;
+      }else{
+        this.isMore=true;
+      }
+      console.log(this.isMore)
+    });
   }
 
   ///create form cubbalab
@@ -135,62 +152,90 @@ this.dropdownSettings = {
     })
   }
 
-  submitForm(){
-    var majorId;
-    var locationId;
-    if(this.userForm.value.major != undefined && this.userForm.value.major.length >0){
-      majorId =this.userForm.value.major[0].id
-    }else{
-      majorId="";
+  submitForm() {
+    WaitingBoxComponent.start();
+    this.pageLoad=0;
+    var majorId:any=[];
+    var locationId:any=[];
+    if (this.userForm.value.major != undefined && this.userForm.value.major.length > 0) {
+      for(var i = 0 ; i < this.userForm.value.major.length; i++){
+      majorId[i] = this.userForm.value.major[i].id
     }
-    if(this.userForm.value.location != undefined && this.userForm.value.location.length >0){
-      locationId=this.userForm.value.location[0].id;
-    }else{
-      locationId="";
+    } else {
+      majorId = [];
     }
-    this.schoolFilter={
-      "name":this.userForm.value.schoolName,
-      "majorId":majorId,
-      "locationId":locationId,
-      "limit":1,
-      "page":0,
+    if (this.userForm.value.location != undefined && this.userForm.value.location.length > 0) {
+      for(var i = 0 ; i < this.userForm.value.location.length; i++){
+        locationId[i] = this.userForm.value.location[i].id;
+      }
+
+    } else {
+      locationId = [];
     }
-    console.log(this.schoolFilter);
+
+    this.schoolFilter = {
+      "name": this.userForm.value.schoolName,
+      "majorIds": majorId,
+      "locationIds": locationId,
+      "limit": 9,
+      "page": 0,
+    }
     this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
-      this.listSearch=response;
-      this.show=true;
+      this.listSearch = response;
+      this.show = true;
+      if(this.schoolFilter.limit > response.length){
+        this.isMore = false;
+      }else{this.isMore = true}
+      console.log(this.isMore)
+      WaitingBoxComponent.stop();
     });
   }
-   // load more school
-   loadMoreSchool(){
+  // load more school
+  loadMoreSchool() {
+    WaitingBoxComponent.start();
+    this.listFilter=[];
     var majorId;
     var locationId;
-    if(this.userForm.value.major != undefined && this.userForm.value.major.length >0){
-      majorId =this.userForm.value.major[0].id
-    }else{
-      majorId=0;
+    if (this.userForm.value.major != undefined && this.userForm.value.major.length > 0) {
+      for(var i = 0 ; i < this.userForm.value.major.length; i++){
+      majorId[i] = this.userForm.value.major[i].id
     }
-    if(this.userForm.value.location != undefined && this.userForm.value.location.length >0){
-      locationId=this.userForm.value.location[0].id;
-    }else{
-      locationId=0;
+    } else {
+      majorId = [];
     }
-    this.schoolFilter={
-      "name":this.userForm.value.schoolName,
-      "majorId":majorId,
-      "locationId":locationId,
-      "limit":1,
-      "page":++this.pageLoad,
+    if (this.userForm.value.location != undefined && this.userForm.value.location.length > 0) {
+      for(var i = 0 ; i < this.userForm.value.location.length; i++){
+        locationId[i] = this.userForm.value.location[i].id;
+      }
+
+    } else {
+      locationId = [];
     }
-    console.log(this.schoolFilter);
+    this.schoolFilter = {
+      "name": this.userForm.value.schoolName,
+      "majorIds": majorId,
+      "locationIds": locationId,
+      "limit": 9,
+      "page": ++this.pageLoad,
+    }
     this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
-      this.listFilter=(response);
-      this.show=true;
-      for(var i = 0 ; i<this.listFilter.length;i++){
+      this.listFilter = (response);
+      this.show = true;
+      if(this.schoolFilter.limit > response.length){
+        this.isMore = false;
+      }
+      for (var i = 0; i < this.listFilter.length; i++) {
         this.listSearch.push(this.listFilter[i]);
       }
     });
-    console.log(this.listSearch);
+    WaitingBoxComponent.stop();
+  }
+  resetForm(){
+    this.selectedItems = {
+      "selectedMajor": [],
+      "selectedLocation": []
+    };
+    this.schoolName = "";
   }
 
 

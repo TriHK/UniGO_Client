@@ -7,6 +7,7 @@ import { BaseService } from "../base-service/base.service";
 import { Constants } from "../../constants";
 import { User } from "../../model/User";
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class LoginService {
@@ -65,14 +66,16 @@ export class LoginService {
                 this.user = this.baseService.getUser();
                 this.isLoggedIn = true;
                 return this.isLoggedIn;
-            }, error => {
-                console.log('authentication fail');
-                if (error.status == this.contants.UNAUTHORIZED) {
-                    this.user = null;
-                    this.isLoggedIn = false;
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("provider");
-                }
+            }).catch((error: Response) => {
+                console.log('handle on catch, status:' + JSON.stringify(error));
+                // if (error.status == this.contants.UNAUTHORIZED ||
+                //     error.status == this.contants.INTERNAL_SERVER_ERROR) {
+                this.user = null;
+                this.isLoggedIn = false;
+                localStorage.removeItem("token");
+                localStorage.removeItem("provider");
+                // }
+                return Observable.of(false);
             });
     }
     public authorizationHeader() {

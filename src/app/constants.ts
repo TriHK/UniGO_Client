@@ -93,6 +93,7 @@ export class Constants {
   public UNAUTHORIZED = 401;
   public CONFLICT = 409;
   public NOT_FOUND = 404;
+  public INTERNAL_SERVER_ERROR = 500;
 
   public QUESTION = 1;
   public ANWSER = 2

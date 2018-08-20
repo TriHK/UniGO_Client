@@ -65,6 +65,7 @@ import { TagInputModule } from 'ngx-chips';
 import { UserFavoriteComponent } from './component/user-favorite/user-favorite.component';
 import { ApproveQuestionComponent } from './component/admin/approve-question/approve-question.component';
 import { ListReportComponent } from './component/admin/list-report/list-report.component';
+import { WaitingBoxComponent } from './waiting-box/waiting-box.component';
 
 const providers = {
     'google': {
@@ -112,6 +113,7 @@ const providers = {
         UserFavoriteComponent,
         ApproveQuestionComponent,
         ListReportComponent,
+        WaitingBoxComponent,
 
     ],
     imports: [
