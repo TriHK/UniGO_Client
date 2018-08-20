@@ -33,8 +33,14 @@
   padding-bottom: 1em;
 }
 .table-filter-school tr td label {
-  color: #FD8814;
-  font-weight: bold;
+  color: @color-4;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+.table-filter-school tr td label.normal-font{
+  font-size: 1.0em;
+  font-weight: normal;
+  color: #333;min-width: 150px
 }
 .select2-container {
   box-sizing: border-box;
@@ -111,26 +117,27 @@
   background-position: center -175px;
   background-repeat: no-repeat;
   height: 500px;
-  overflow: hidden;
+  z-index: 99;
   .container{
     height: auto;
     position: relative;
   }
   .box-search-job {
     padding: 25px;
-    background-color: rgba(0, 0, 0, 0.42);
+    background-color: rgba(0, 0, 0, 0.7);
   }
   .btn{
     padding: 10px 118px;
     background-color: @color-4;
     color: @color-0;
   }
-  h1{
+
+  h2{
     margin: 0;
-    font-size: 25px;
     padding: 0;
-    color: @color-3;
+    color: @color-4;
     margin-bottom: 20px;
+    font-weight: 700;
   }
 }
 //Form group
@@ -185,7 +192,7 @@
 }
 
 .list-major {
-  font-size: 15px;
+  font-size: 1em;
   margin: 5px auto;
   display: inline-block;
   border: 1px solid #d5d5d5;
@@ -213,7 +220,7 @@
   float: right;
   margin-right: 30px;
   margin-bottom: 15px;
-  font-size: 20px;
+  font-size: 1.3em;
 }
 
 .see-more:hover{
@@ -229,6 +236,8 @@
   padding: 20px 60px 20px 60px;
   border: 2px solid red;
   border-radius: 16px;
-  font-size: 22px;
+  font-size: 1.1em;
   color: red;
 }
+
+

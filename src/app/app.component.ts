@@ -8,7 +8,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {User} from "./model/User";
 import {BaseService} from "./service/base-service/base.service";
 import {UniversityService} from "./service/university/university.service";
-
+import {WaitingBoxComponent} from "./waiting-box/waiting-box.component";
 
 
 @Component({
@@ -28,12 +28,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.toastr.setRootViewContainerRef(vcr);
   }
   ngOnInit() {
+    WaitingBoxComponent.start();
       this.user = JSON.parse(localStorage.getItem('currentUser'));
       if(this.user){
         this.loginService.setRole(this.user.role.id);
         this.baseService.setUser(this.user);
         this.loginService.setLogin(true);
       }
+      WaitingBoxComponent.stop();
   }
   public login(provider) {
     this.sub = this.auth.login(provider).subscribe(
