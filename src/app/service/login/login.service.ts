@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Http, RequestOptions, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Http, RequestOptions, Response, Headers } from "@angular/http";
+import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class LoginService {
   constructor(private _http: Http) { }
   public space = new BehaviorSubject<any>(null);
 
-  public broadcastTextChange(value:any) {
+  public broadcastTextChange(value: any) {
     this.space.next(value);
   }
 
@@ -21,19 +21,19 @@ export class LoginService {
   public setLogin(isLoggedIn: boolean) {
     this.isLoggedIn = isLoggedIn;
   }
-  public setRole(isRole:any){
+  public setRole(isRole: any) {
     this.isRole = isRole;
   }
-  public checkRole(){
+  public checkRole() {
     return this.isRole;
   }
-  register(apiUrl,data): Observable<any[]> {
-    return this._http.post(apiUrl,data).map((res:Response)=>res.json());
+  register(apiUrl, data): Observable<any[]> {
+    return this._http.post(apiUrl, data).map((res: Response) => res.json());
   }
-  login(apiUrl,data) : Observable<any>{
-    return this._http.post(apiUrl,data).map((res:Response)=>res.json());
+  login(apiUrl, data): Observable<any> {
+    return this._http.post(apiUrl, data).map((res: Response) => res.json());
   }
-  loginProvider(apiUrl,data): Observable<any>{
-    return this._http.post(apiUrl,data).map((res:Response)=>res.json());
+  loginProvider(apiUrl, data): Observable<any> {
+    return this._http.post(apiUrl, data).map((res: Response) => res.json());
   }
 }
