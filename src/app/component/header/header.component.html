@@ -33,22 +33,22 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a *ngIf="user.role && user.role.id==2" routerLink="/admin">{{user.name}}</a>
+                    <a *ngIf="user.role==='ADMIN'" routerLink="/admin">{{user.name}}</a>
                     <!--role admin-->
-                    <a *ngIf="(user.role && user.role.id==1) || !user.role">{{user.name}}</a>
+                    <a *ngIf="user.role==='USER'">{{user.name}}</a>
                     <!--role user-->
                   </li>
                   <li role="separator" class="divider"></li>
                   <li><a (click)="clickLink()">Chỉnh sửa thông tin</a></li>
                   <li><a (click)="clickLinkFavorite()">Danh sách yêu thích</a></li>
-                  <li><a *ngIf="user.role && user.role.id==1" (click)="clickLinkQuestion()">Câu hỏi của bạn</a></li>
+                  <li><a *ngIf="user.role==='USER'" (click)="clickLinkQuestion()">Câu hỏi của bạn</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a (click)="logout(user.provider)">Thoát tài khoản</a></li>
                 </ul>
               </li>
               <li class="text-li" *ngIf="!user">
                 <a class="cursor-pointer" data-toggle="modal" data-target="#myModal">
-                  <span class="glyphicon glyphicon-log-in"> Đăngnhập</span>
+                  <span class="glyphicon glyphicon-log-in"> Đăng nhập</span>
                 </a>
               </li>
         </ul>

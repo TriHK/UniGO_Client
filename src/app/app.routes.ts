@@ -57,7 +57,7 @@ const routing: Routes = [
     ]
   },
   {
-    path: 'admin', component: AdminComponent, canActivate: [CheckLoginGuard],
+    path: 'admin', component: AdminComponent, canActivate: [CheckLoginGuard, CheckRoleGuard],
     children: [
       { path: 'list-university', component: ListuniversityComponent },
       { path: 'add-university', component: AdduniversityComponent },

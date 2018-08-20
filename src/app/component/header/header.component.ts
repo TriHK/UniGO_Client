@@ -24,9 +24,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.getUser();
     this.getCount();
-    if (!this.user) {
-      this.user = JSON.parse(localStorage.getItem('currentUser'));
-    }
     console.log(this.url);
     if (this.url == '/') {
       this.router.navigate(['home'])
@@ -42,10 +39,14 @@ export class HeaderComponent implements OnInit {
     }
   }
   public getUser(): void {
-    this.loginService.space.subscribe(value => {
-      this.user = value;
-      this.cdRef.detectChanges();
-    });
+    var that = this;
+    this.loginService.authentication().subscribe(
+      (value) => {
+        that.user = that.loginService.getUser();
+        that.cdRef.detectChanges();
+      }
+    );
+
   }
 
   public getCount(): void {
@@ -63,7 +64,8 @@ export class HeaderComponent implements OnInit {
           this.loginService.setLogin(false);
           this.loginService.broadcastTextChange(this.user);
           window.location.replace('/home');
-          localStorage.removeItem('currentUser');
+          localStorage.removeItem('token');
+          localStorage.removeItem('provider');
         }
       );
     } else {
@@ -72,7 +74,8 @@ export class HeaderComponent implements OnInit {
       this.loginService.setLogin(false);
       this.loginService.broadcastTextChange(this.user);
       window.location.replace('/home');
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem('token');
+      localStorage.removeItem('provider');
     }
   }
   public clickLink() {
