@@ -81,8 +81,9 @@ export class NewReviewComponent implements OnInit {
         'university': {
           'id': parseInt(this.id) //universityId
         },
+        //WARNING
         'users':{
-          'id': this.user.id
+          'id': 1
         },
         'title': form.value.title,
         'description': $('#summernote').summernote('code'),

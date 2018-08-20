@@ -1,14 +1,13 @@
 <section id="hero">
-  <div class="container" style="top:145px">
+  <div class="container" style="top:100px">
     <div class="box-search-job box">
-
       <table class = "table-filter-school">
         <form [formGroup]="userForm" novalidate>
           <tr>
             <td colspan="2">
-              <h1 class="text-center">
-                <b>Tìm kiếm ngôi trường mơ ước của bạn cùng UniStart</b>
-              </h1>
+              <h2 class="text-center">
+                Tìm kiếm ngôi trường mơ ước của bạn cùng UniStart
+              </h2>
             </td>
           </tr>
           <tr>
@@ -16,7 +15,7 @@
               <label for="name">Tên Trường : </label>
             </td>
             <td>
-              <input class="form-control" formControlName="schoolName">
+              <input class="form-control" formControlName="schoolName" [(ngModel)]="schoolName">
             </td>
           </tr>
           <tr>
@@ -28,7 +27,7 @@
                 formControlName="major">
                 <c-item>
                   <ng-template let-item="item">
-                    <label style="color: #333;min-width: 150px;">{{item.itemName}}</label>
+                    <label class="normal-font" >{{item.itemName}}</label>
 
                   </ng-template>
                 </c-item>
@@ -37,20 +36,23 @@
           </tr>
           <tr>
             <td> <label>Khu vực :</label></td>
-            <td> <angular2-multiselect [data]="dropDownList.listLocation" [(ngModel)]="selectedItems.selectedLocation" [settings]="dropdownSettings"
+            <td> <angular2-multiselect [data]="dropDownList.listLocation" [(ngModel)]="selectedItems.selectedLocation" [settings]="dropdownSettings2"
               formControlName="location">
               <c-item>
                 <ng-template let-item="item">
-                  <label style="color: #333;min-width: 150px;">{{item.itemName}}</label>
+                  <label class="normal-font">{{item.itemName}}</label>
 
                 </ng-template>
               </c-item>
             </angular2-multiselect></td>
           </tr>
           <tr>
-            <td colspan="2">
-                <button class="btn" type="submit" (click)="submitForm(pageLoad)" [disabled]="!userForm.valid">
+            <td>
+                <button class="btn" type="submit" (click)="submitForm()" [disabled]="!userForm.valid">
                     <i class="fa fa-search" aria-hidden="true"></i>Tìm Ngay</button>
+            </td>
+            <td>
+              <button class="btn" (click)="resetForm()">Reset</button>
             </td>
           </tr>
         </form>
@@ -93,13 +95,11 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-success" (click)="loadMoreSchool()">
-        <i class="fa fa-hand-o-right"></i> Tải Thêm
+      <button *ngIf="isMore" class="btn btn-success" (click)="loadMoreSchool()">
+        <i class="fa fa-spinner"></i> Tải Thêm
       </button>
     </div>
-    <div class="text-center">
-      <pagination-controls (pageChange)="p =$event" previousLabel="" nextLabel=""></pagination-controls>
-    </div>
+    <app-waiting-box></app-waiting-box>
   </div>
 </div>
 
