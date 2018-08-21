@@ -42,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
                     'username': this.user.email,
                     'image': this.user.image,
                     'name': this.user.name,
+                    'providerId': this.user.id,
                     'providerName': this.user.providerName,
                     'token': this.user.token
                 };

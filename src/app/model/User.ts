@@ -3,6 +3,7 @@ export class User {
   image: string;
   name: string;
   email: string;
+  id: string;
   providerName: string;
   token: string;
   role: string;
@@ -26,6 +27,15 @@ export class User {
       }
       if (data.token) {
         this.token = data.token;
+      }
+      //id
+      if (data.userId) {
+        this.id = data.userId;
+      } else {
+        this.id = data.id;
+      }
+      if (data.uid) {
+        this.id = data.uid;
       }
       this.email = data.email;
       if (data.role) {
