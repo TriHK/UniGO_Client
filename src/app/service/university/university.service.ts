@@ -65,18 +65,16 @@ export class UniversityService {
       .map((response: Response) => response.json());
   }
 
-  getQuestionDetail(qaId, userId): Observable<any> {
-    return this._http.get(this.contant.GET_QUESTION_DETAIL + "?qaId=" + qaId + "&userId=" + userId)
-      .map((response: Response) => response.json());
+  getQuestionDetail(qaId): Observable<any> {
+    return this.authorizedHttp.get(this.contant.GET_QUESTION_DETAIL + "?qaId=" + qaId);
   }
 
   getQuestionByUser(): Observable<any> {
     return this.authorizedHttp.get(this.contant.QUESTIONS_BY_USER);
   }
 
-  getAnwserByQuestion(questionId, userId): Observable<any> {
-    return this._http.get(this.contant.ANSWER_BY_QUESTION + "?qaId=" + questionId + "&userId=" + userId)
-      .map((response: Response) => response.json());
+  getAnwserByQuestion(questionId): Observable<any> {
+    return this.authorizedHttp.get(this.contant.ANSWER_BY_QUESTION + "?qaId=" + questionId);
   }
 
   changeStatusQA(data): Observable<any> {
