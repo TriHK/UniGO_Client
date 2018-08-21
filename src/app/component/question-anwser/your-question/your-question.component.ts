@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UniversityService} from "../../../service/university/university.service";
-import {BaseService} from "../../../service/base-service/base.service";
+import { UniversityService } from "../../../service/university/university.service";
+import { BaseService } from "../../../service/base-service/base.service";
 
 @Component({
   selector: 'app-your-question',
@@ -13,8 +13,7 @@ export class YourQuestionComponent implements OnInit {
   public questions: any;
 
   ngOnInit() {
-    let userId = this.baseService.getUser().id;
-    this.uniService.getQuestionByUser(userId).subscribe(res=>{
+    this.uniService.getQuestionByUser().subscribe(res => {
       this.questions = res;
     });
     this.uniService.broadcastTextChange(0);

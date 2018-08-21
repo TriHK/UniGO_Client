@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['home'])
     }
     if (this.user) {
-      this.uniService.getQuestionByUser(this.user.id).subscribe(res => {
+      this.uniService.getQuestionByUser().subscribe(res => {
         if (res) {
           for (let i = 0; i < res.length; i++) {
             this.count = this.count + res[i].count;
