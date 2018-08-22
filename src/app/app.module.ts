@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { appRoutes } from './app.routes';
-import { MatRadioModule, MatTooltipModule} from '@angular/material';
+import { MatRadioModule, MatTooltipModule } from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastModule } from "ng2-toastr/ng2-toastr";
 import { Select2Module } from "ng2-select2";
@@ -66,6 +66,7 @@ import { UserFavoriteComponent } from './component/user-favorite/user-favorite.c
 import { ApproveQuestionComponent } from './component/admin/approve-question/approve-question.component';
 import { ListReportComponent } from './component/admin/list-report/list-report.component';
 import { WaitingBoxComponent } from './waiting-box/waiting-box.component';
+import { AuthorizedHttpClient } from './utils/authorized-http-client';
 
 const providers = {
     'google': {
@@ -136,7 +137,8 @@ const providers = {
     ],
     providers: [LoginService, BaseService, CheckLoginGuard,
         CheckRoleGuard, SearchService, Constants,
-        UniversityService, MbtiService, ReviewService, NgbRatingConfig, DecimalPipe],
+        UniversityService, MbtiService, ReviewService, NgbRatingConfig, DecimalPipe,
+        AuthorizedHttpClient],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

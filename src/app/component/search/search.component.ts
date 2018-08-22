@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { trigger, style, animate, transition } from '@angular/animations';
 import { SearchService } from "../../service/base-service/search.service";
 import { UniversityService } from "../../service/university/university.service";
 import * as $ from 'jquery';
@@ -7,9 +8,10 @@ import { Observable } from "rxjs/Observable";
 import { Select2OptionData } from "ng2-select2";
 import { Constants } from "../../constants";
 import {WaitingBoxComponent} from "../../waiting-box/waiting-box.component";
-
+import {SlideInOutAnimation} from"../../animation";
 @Component({
   selector: 'app-search',
+  animations:[SlideInOutAnimation],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.less']
 })
@@ -35,6 +37,7 @@ export class SearchComponent implements OnInit {
   public isCheckForLocation: boolean = false;
   public isFirst: boolean = true;
   public isInto: boolean = true;
+  public findAdvance:boolean=false;
   public isMore: boolean ;
   constructor(private searchService: SearchService, private contant: Constants,
     private cef: ChangeDetectorRef,
@@ -60,6 +63,7 @@ export class SearchComponent implements OnInit {
   public schoolFilter: any = [];
   public pageLoad: number = 0;
   schoolName: string;
+  public animationState = 'out';
   ngOnInit() {
     this.isMore=true;
     this.dropdownSettings = {
@@ -186,7 +190,7 @@ export class SearchComponent implements OnInit {
       if(this.schoolFilter.limit > response.length){
         this.isMore = false;
       }else{this.isMore = true}
-      console.log(this.isMore)
+      console.log(this.listSearch)
       WaitingBoxComponent.stop();
     });
   }
@@ -236,6 +240,13 @@ export class SearchComponent implements OnInit {
       "selectedLocation": []
     };
     this.schoolName = "";
+  };
+  doFindAdvance(divName:string){
+    if(divName === 'divA'){
+    this.findAdvance = !this.findAdvance;
+    console.log(this.animationState);
+    this.animationState = this.animationState === 'out' ? 'in' : 'out';
+    }
   }
 
 
