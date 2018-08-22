@@ -1,8 +1,9 @@
 <section id="hero">
   <div class="container" style="top:100px">
     <div class="box-search-job box">
-      <table class = "table-filter-school">
         <form [formGroup]="userForm" novalidate>
+      <table class = "table-filter-school">
+
           <tr>
             <td colspan="2">
               <h2 class="text-center">
@@ -14,15 +15,15 @@
             <td>
               <label for="name">Tên Trường : </label>
             </td>
-            <td>
+            <td colspan="3">
               <input class="form-control" formControlName="schoolName" [(ngModel)]="schoolName">
             </td>
           </tr>
-          <tr>
+          <tr  [@slideInOut]="animationState">
             <td>
               <label>Ngành : </label>
             </td>
-            <td>
+            <td colspan="3">
                 <angular2-multiselect [data]="dropDownList.listMajor" [(ngModel)]="selectedItems.selectedMajor" [settings]="dropdownSettings"
                 formControlName="major">
                 <c-item>
@@ -34,9 +35,9 @@
               </angular2-multiselect>
             </td>
           </tr>
-          <tr>
+          <tr [@slideInOut]="animationState">
             <td> <label>Khu vực :</label></td>
-            <td> <angular2-multiselect [data]="dropDownList.listLocation" [(ngModel)]="selectedItems.selectedLocation" [settings]="dropdownSettings2"
+            <td colspan="3"> <angular2-multiselect [data]="dropDownList.listLocation" [(ngModel)]="selectedItems.selectedLocation" [settings]="dropdownSettings2"
               formControlName="location">
               <c-item>
                 <ng-template let-item="item">
@@ -47,16 +48,17 @@
             </angular2-multiselect></td>
           </tr>
           <tr>
-            <td>
+            <td></td>
+            <td colspan="2">
                 <button class="btn" type="submit" (click)="submitForm()" [disabled]="!userForm.valid">
                     <i class="fa fa-search" aria-hidden="true"></i>Tìm Ngay</button>
             </td>
-            <td>
-              <button class="btn" (click)="resetForm()">Reset</button>
+            <td class="btn-advanced">
+              <p (click)="doFindAdvance('divA')"><i [className]="findAdvance ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i>Tìm kiếm nâng cao</p>
             </td>
           </tr>
-        </form>
       </table>
+    </form>
   </div>
   </div>
 </section>
@@ -83,7 +85,7 @@
               </p>
             </div>
             <div style="min-height: 35px; border: 1px solid white">
-              <p>{{university.phone}}</p>
+              <p>{{university.location.locationName}}</p>
             </div>
             <div>
               <p>
