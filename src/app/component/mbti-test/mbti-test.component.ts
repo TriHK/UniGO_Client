@@ -51,7 +51,7 @@ export class MbtiTestComponent implements OnInit {
     this.tested = false;
     this.questions = [];
 
-    this.mbtiService.getMbtiresult(this.baseService.getUser().id).subscribe((response: any) => {
+    this.mbtiService.getMbtiresult().subscribe((response: any) => {
       this.mbtiResult = response;
       this.majorResult = response.mbtitype.majorMbtis;
       this.getUniMBTI(response.mbtitype.id);
@@ -141,9 +141,6 @@ export class MbtiTestComponent implements OnInit {
     let data = {
       mbtiType: {
         "mbtitypeName": this.MBTIresult
-      },
-      user: {
-        "id": this.baseService.getUser().id,
       }
     };
     // if (this.update === false) {
