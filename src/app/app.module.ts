@@ -11,6 +11,9 @@ import { ToastModule } from "ng2-toastr/ng2-toastr";
 import { Select2Module } from "ng2-select2";
 import { RatingModule } from "ngx-bootstrap";
 import { NgbModule, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+
 
 // Component
 import { AppComponent } from './app.component';
@@ -31,7 +34,7 @@ import { ListuniversityComponent } from './component/admin/listuniversity/listun
 import { AdduniversityComponent } from './component/admin/adduniversity/adduniversity.component';
 import { ApproveReivewComponent } from './component/admin/approve-reivew/approve-reivew.component';
 import { ViewMajorUnversityComponent } from './component/search/view-major-unversity/view-major-university.component';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+
 // Service
 import { LoginService } from './service/login/login.service';
 import { BaseService } from './service/base-service/base.service';
@@ -134,6 +137,7 @@ const providers = {
         NgbModule,
         TagInputModule,
         AngularMultiSelectModule,
+        SelectDropDownModule,
     ],
     providers: [LoginService, BaseService, CheckLoginGuard,
         CheckRoleGuard, SearchService, Constants,

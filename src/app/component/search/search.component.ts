@@ -7,11 +7,13 @@ import * as $ from 'jquery';
 import { Observable } from "rxjs/Observable";
 import { Select2OptionData } from "ng2-select2";
 import { Constants } from "../../constants";
-import {WaitingBoxComponent} from "../../waiting-box/waiting-box.component";
-import {SlideInOutAnimation} from"../../animation";
+import { WaitingBoxComponent } from "../../waiting-box/waiting-box.component";
+import { SlideInOutAnimation } from "../../animation";
+import { text } from '../../../../node_modules/@angular/core/src/render3/instructions';
+
 @Component({
   selector: 'app-search',
-  animations:[SlideInOutAnimation],
+  animations: [SlideInOutAnimation],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.less']
 })
@@ -37,8 +39,8 @@ export class SearchComponent implements OnInit {
   public isCheckForLocation: boolean = false;
   public isFirst: boolean = true;
   public isInto: boolean = true;
-  public findAdvance:boolean=false;
-  public isMore: boolean ;
+  public findAdvance: boolean = false;
+  public isMore: boolean;
   constructor(private searchService: SearchService, private contant: Constants,
     private cef: ChangeDetectorRef,
     private UniversityService: UniversityService,
@@ -53,6 +55,8 @@ export class SearchComponent implements OnInit {
   // public listMajor:any [] = [];
   // public listLocation:any [] = [];
   public listUniName: Observable<Select2OptionData[]>;
+
+
   public valueMajor: number = 0;
   public valueLocation: number = 0;
   public valueUniversity: number = 0;
@@ -65,7 +69,7 @@ export class SearchComponent implements OnInit {
   schoolName: string;
   public animationState = 'out';
   ngOnInit() {
-    this.isMore=true;
+    this.isMore = true;
     this.dropdownSettings = {
       singleSelection: false,
       text: "Chọn ngành",
@@ -93,10 +97,10 @@ export class SearchComponent implements OnInit {
     }
     ///========================
     document.documentElement.scrollTop = 0;
-    //this.changedUniversity({value:null});
+    // this.changedUniversity({value:null});
     this.listUniName = this.searchService.getList(this.contant.UNIVERSITY);
-    //setTimeout(()=> this.valueUniversity = 3,1000);
-    //Placeholder search input
+    console.log(this.listUniName);
+
     this.optionMajor = {
       allowClear: true,
       placeholder: {
@@ -108,7 +112,7 @@ export class SearchComponent implements OnInit {
       allowClear: true,
       placeholder: {
         id: '0',
-        text: 'Chọn trường đại học'
+        text: 'Chọn Trường Đại Học'
       }
     };
     this.optionLocation = {
@@ -138,10 +142,10 @@ export class SearchComponent implements OnInit {
     this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
       this.listSearch = response;
       this.show = true;
-      if(this.schoolFilter.limit > response.length){
+      if (this.schoolFilter.limit > response.length) {
         this.isMore = false;
-      }else{
-        this.isMore=true;
+      } else {
+        this.isMore = true;
       }
       console.log(this.isMore)
     });
@@ -158,18 +162,18 @@ export class SearchComponent implements OnInit {
 
   submitForm() {
     WaitingBoxComponent.start();
-    this.pageLoad=0;
-    var majorId:any=[];
-    var locationId:any=[];
+    this.pageLoad = 0;
+    var majorId: any = [];
+    var locationId: any = [];
     if (this.userForm.value.major != undefined && this.userForm.value.major.length > 0) {
-      for(var i = 0 ; i < this.userForm.value.major.length; i++){
-      majorId[i] = this.userForm.value.major[i].id
-    }
+      for (var i = 0; i < this.userForm.value.major.length; i++) {
+        majorId[i] = this.userForm.value.major[i].id
+      }
     } else {
       majorId = [];
     }
     if (this.userForm.value.location != undefined && this.userForm.value.location.length > 0) {
-      for(var i = 0 ; i < this.userForm.value.location.length; i++){
+      for (var i = 0; i < this.userForm.value.location.length; i++) {
         locationId[i] = this.userForm.value.location[i].id;
       }
 
@@ -187,9 +191,9 @@ export class SearchComponent implements OnInit {
     this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
       this.listSearch = response;
       this.show = true;
-      if(this.schoolFilter.limit > response.length){
+      if (this.schoolFilter.limit > response.length) {
         this.isMore = false;
-      }else{this.isMore = true}
+      } else { this.isMore = true }
       console.log(this.listSearch)
       WaitingBoxComponent.stop();
     });
@@ -197,18 +201,18 @@ export class SearchComponent implements OnInit {
   // load more school
   loadMoreSchool() {
     WaitingBoxComponent.start();
-    this.listFilter=[];
+    this.listFilter = [];
     var majorId;
     var locationId;
     if (this.userForm.value.major != undefined && this.userForm.value.major.length > 0) {
-      for(var i = 0 ; i < this.userForm.value.major.length; i++){
-      majorId[i] = this.userForm.value.major[i].id
-    }
+      for (var i = 0; i < this.userForm.value.major.length; i++) {
+        majorId[i] = this.userForm.value.major[i].id
+      }
     } else {
       majorId = [];
     }
     if (this.userForm.value.location != undefined && this.userForm.value.location.length > 0) {
-      for(var i = 0 ; i < this.userForm.value.location.length; i++){
+      for (var i = 0; i < this.userForm.value.location.length; i++) {
         locationId[i] = this.userForm.value.location[i].id;
       }
 
@@ -225,7 +229,7 @@ export class SearchComponent implements OnInit {
     this.searchService.doFilterSchool(this.schoolFilter).subscribe((response: any) => {
       this.listFilter = (response);
       this.show = true;
-      if(this.schoolFilter.limit > response.length){
+      if (this.schoolFilter.limit > response.length) {
         this.isMore = false;
       }
       for (var i = 0; i < this.listFilter.length; i++) {
@@ -234,18 +238,18 @@ export class SearchComponent implements OnInit {
     });
     WaitingBoxComponent.stop();
   }
-  resetForm(){
+  resetForm() {
     this.selectedItems = {
       "selectedMajor": [],
       "selectedLocation": []
     };
     this.schoolName = "";
   };
-  doFindAdvance(divName:string){
-    if(divName === 'divA'){
-    this.findAdvance = !this.findAdvance;
-    console.log(this.animationState);
-    this.animationState = this.animationState === 'out' ? 'in' : 'out';
+  doFindAdvance(divName: string) {
+    if (divName === 'divA') {
+      this.findAdvance = !this.findAdvance;
+      console.log(this.animationState);
+      this.animationState = this.animationState === 'out' ? 'in' : 'out';
     }
   }
 
