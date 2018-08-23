@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {User} from "../../model/User";
-import {BaseService} from "../../service/base-service/base.service";
-import {RequestOptions, Headers} from "@angular/http";
-import {UniversityService} from "../../service/university/university.service";
+import { NgForm } from "@angular/forms";
+import { User } from "../../model/User";
+import { BaseService } from "../../service/base-service/base.service";
+import { RequestOptions, Headers } from "@angular/http";
+import { UniversityService } from "../../service/university/university.service";
 
 @Component({
   selector: 'app-user-detail',
@@ -11,16 +11,16 @@ import {UniversityService} from "../../service/university/university.service";
   styleUrls: ['./user-detail.component.less']
 })
 export class UserDetailComponent implements OnInit {
-  private user : User;
+  public user: User;
   public imageSrc;
   public isLoadImage: boolean = false;
-  constructor(private baseService: BaseService, private uniService: UniversityService) {}
+  constructor(private baseService: BaseService, private uniService: UniversityService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.user = this.baseService.getUser();
     this.imageSrc = this.user.image;
   }
-  handleInputChange(e){
+  handleInputChange(e) {
     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     var pattern = /image-*/;
     var reader = new FileReader();
@@ -42,13 +42,13 @@ export class UserDetailComponent implements OnInit {
     let data = {
       'image': reader.result.split(',')[1]
     };
-      this.uniService.uploadFile(url,data,options).subscribe((response:any)=>{
-        this.imageSrc = response.data.link;
-        this.isLoadImage = false;
-      });
+    this.uniService.uploadFile(url, data, options).subscribe((response: any) => {
+      this.imageSrc = response.data.link;
+      this.isLoadImage = false;
+    });
   }
 
-  onSubmit(form: NgForm){
+  onSubmit(form: NgForm) {
 
   }
 }
