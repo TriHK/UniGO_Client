@@ -72,7 +72,7 @@ export class ReviewService {
   }
 
   checkReviewUni(data): Observable<any> {
-    return this._http.post(this.contant.CHECK_REVIEWED_UNI, data).map((res: Response) => res.json());
+    return this.authorizedHttpClient.post(this.contant.CHECK_REVIEWED_UNI, data);
   }
 
   getArticle() {

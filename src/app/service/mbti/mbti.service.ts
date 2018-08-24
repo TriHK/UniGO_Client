@@ -24,11 +24,6 @@ export class MbtiService {
     return this.authHttp.get(this.constant.GET_MBTI_RESULT);
   }
 
-  updateMbti(data): Observable<any[]> {
-    return this._http.post(this.constant.UPDATE_MBTI_RESULT, data)
-      .map((response: Response) => response.json())
-  }
-
   getTopUniMBTI(data: number): Observable<any[]> {
     return this._http.get(this.constant.TOP_UNI_MBTI + "?mbtiTypeId=" + data)
       .map((res: Response) => res.json());

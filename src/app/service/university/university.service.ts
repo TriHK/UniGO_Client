@@ -56,8 +56,7 @@ export class UniversityService {
   }
 
   saveQuestionAnswer(data): Observable<any> {
-    return this._http.post(this.contant.SAVE_QUESTION, data)
-      .map((response: Response) => response.json());
+    return this.authorizedHttp.post(this.contant.SAVE_QUESTION, data);
   }
 
   getAllQuestion(): Observable<any> {

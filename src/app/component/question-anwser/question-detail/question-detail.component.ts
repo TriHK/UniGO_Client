@@ -98,10 +98,7 @@ export class QuestionDetailComponent implements OnInit {
         'title': '',
         "content": $('#summnernote').summernote('code'),
         "type": this.contants.ANWSER,
-        "parentId": this.qaId,
-        "users": {
-          "id": this.baseService.getUser().id
-        }
+        "parentId": this.qaId
       };
       this.uniService.saveQuestionAnswer(data).subscribe(res => {
         if (!this.anwsers) {

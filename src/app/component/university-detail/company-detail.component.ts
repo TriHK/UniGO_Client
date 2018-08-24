@@ -1,12 +1,12 @@
 
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as $ from 'jquery';
-import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute} from "@angular/router";
-import {UniversityService} from "../../service/university/university.service";
-import {ReviewService} from "../../service/review/review.service";
-import {BaseService} from "../../service/base-service/base.service";
-import {Constants} from "../../constants";
+import { Subscription } from "rxjs/Subscription";
+import { ActivatedRoute } from "@angular/router";
+import { UniversityService } from "../../service/university/university.service";
+import { ReviewService } from "../../service/review/review.service";
+import { BaseService } from "../../service/base-service/base.service";
+import { Constants } from "../../constants";
 declare var window: any;
 declare var google: any;
 @Component({
@@ -35,12 +35,12 @@ export class CompanyDetailComponent implements OnInit, AfterViewInit, OnDestroy 
     blockYear2: [],
   };
 
-public currentUrl;
+  public currentUrl;
   constructor(private activateRoute: ActivatedRoute,
-              private universityService: UniversityService,
-              private  reviewService: ReviewService,
-              private constant: Constants,
-              private baseService: BaseService) {
+    private universityService: UniversityService,
+    private reviewService: ReviewService,
+    private constant: Constants,
+    private baseService: BaseService) {
   }
 
   ngOnInit() {
@@ -63,7 +63,7 @@ public currentUrl;
     this.universityService.getUniversityById(this.id).subscribe((university: any) => {
       this.university = university;
       this.baseService.setUniversity(university);
-      localStorage.setItem("UNI",JSON.stringify(university));
+      localStorage.setItem("UNI", JSON.stringify(university));
       this.des = university.description;
       this.valueMajor = [];
       for (let i = 0; i < this.university.majorUniversities.length; i++) {
@@ -100,35 +100,29 @@ public currentUrl;
     //   map: map
     // });
   }
-  checkIsReview(){
-    this.user = this.baseService.getUser();
-    if (this.user) {
-      let data = {
-        "university":
-          {
-            "id": this.id
-          },
-        "users":
-          {
-            "id": this.user.id
-          }
-      };
-      this.reviewService.checkReviewUni(data).subscribe((res: any) => {
-        this.checkReviewUni = res;
-      })
-    }
+  checkIsReview() {
+    let data = {
+      "university":
+      {
+        "id": this.id
+      }
+    };
+    this.reviewService.checkReviewUni(data).subscribe((res: any) => {
+      this.checkReviewUni = res;
+    })
     //Top Corrlate University
-    this.universityService.topCorrlateUni(this.id).subscribe((res: any)=>{
+    this.universityService.topCorrlateUni(this.id).subscribe((res: any) => {
       this.topCorrlateUni = res;
     })
   }
+  
   ngAfterViewInit() {
 
   }
 
   showDetail(value) {
     this.baseService.setValueMajorUni(value);
-    localStorage.setItem("MAJOR_UNI",JSON.stringify(value));
+    localStorage.setItem("MAJOR_UNI", JSON.stringify(value));
     // if(value.blockMajorUniversities.length == 0){
     //   // document.getElementById('openNotDetail').click();
     // }else{
@@ -156,8 +150,8 @@ public currentUrl;
     // }
   }
 
-  public getNewestArticle(data){
-    this.reviewService.getNewestArticle(data).subscribe((res: any)=>{
+  public getNewestArticle(data) {
+    this.reviewService.getNewestArticle(data).subscribe((res: any) => {
       this.listArticle = res;
     })
   }
