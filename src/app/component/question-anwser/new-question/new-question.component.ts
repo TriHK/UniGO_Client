@@ -84,9 +84,6 @@ export class NewQuestionComponent implements OnInit {
         "content": $('#summernote').summernote('code'),
         "type": this.contants.QUESTION,
         "parentId": 0,
-        "users": {
-          "id": this.baseService.getUser().id
-        },
         'tagUniversity': this.tagName,
       };
       console.log(data);

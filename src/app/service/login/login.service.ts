@@ -67,7 +67,6 @@ export class LoginService {
                 this.isLoggedIn = true;
                 return this.isLoggedIn;
             }).catch((error: Response) => {
-                console.log('handle on catch, status:' + JSON.stringify(error));
                 // if (error.status == this.contants.UNAUTHORIZED ||
                 //     error.status == this.contants.INTERNAL_SERVER_ERROR) {
                 this.user = null;

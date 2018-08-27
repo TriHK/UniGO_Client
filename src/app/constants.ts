@@ -13,8 +13,6 @@ export class Constants {
   public USER_INFO = this.SERVER_NAME + "/user";
   public LOGIN_URL = this.SERVER_NAME + "/login";
   public REGISTER = this.SERVER_NAME + "/user/register";
-  public LOGIN = this.SERVER_NAME + "/user/check-login";
-  public LOGIN_PROVIDER = this.SERVER_NAME + "/user/check-login-3rd-party";
   public UNIVERSITY = this.SERVER_NAME + "/university/show-university";
   public MAJOR = this.SERVER_NAME + "/university/show-major";
   public LOCATION = this.SERVER_NAME + "/location/show-location";
@@ -28,7 +26,6 @@ export class Constants {
   public MBTI = this.SERVER_NAME + "/mbti/show-mbti-question";
   public SAVE_MBTI_RESULT = this.SERVER_NAME + "/mbti/save-mbti-result";
   // public GET_MBTI_MAJOR = this.SERVER_NAME +"/mbti/get-mbti-major";
-  public UPDATE_MBTI_RESULT = this.SERVER_NAME + "/mbti/update-mbti-result";
   public GET_MBTI_RESULT = this.SERVER_NAME + "/mbti/get-mbti-results";
   public DELETE_UNIVERSITY = this.SERVER_NAME + "/university/delete";
   public UPDATE_SCORE = this.SERVER_NAME + "/score/save-score";
